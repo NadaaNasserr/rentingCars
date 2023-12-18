@@ -58,4 +58,14 @@ public class UserService {
         car.setUser(user);
         carRepository.save(car);
     }
+
+    public String logIn(String username, String password){
+
+        User user = userRepository.logIn(username,password);
+        if(user==null){
+            throw  new ApiException("username or password is incorrect");
+        }
+        return "Login successfully";
+
+    }
 }

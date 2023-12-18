@@ -18,10 +18,11 @@ public class CarController {
 
     @GetMapping("/get")
     public ResponseEntity getAllCar() {
+
         return ResponseEntity.status(HttpStatus.OK).body(carService.getAllCar());
     }
 
-    @PostMapping("add")
+    @PostMapping("/add")
     public ResponseEntity addCar(@RequestBody @Valid Car car) {
         carService.addCar(car);
         return ResponseEntity.status(HttpStatus.OK).body("added car");
@@ -75,4 +76,17 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.OK).body(cars);
     }
 
+
+    @GetMapping("/getAllCarsIsChecked")
+    public ResponseEntity getAllCarsIsChecked() {
+        List<Car> cars = carService.getAllCarsIsChecked();
+        return ResponseEntity.status(HttpStatus.OK).body(cars);
+    }
+
+
+    @PutMapping("/carCheck/{car_id}/{employee_id}")
+    public ResponseEntity carCheck(@PathVariable  Integer car_id, @PathVariable  Integer employee_id){
+        carService.carCheck(car_id,employee_id);
+        return ResponseEntity.status(HttpStatus.OK).body("the car has been successfully inspected");
+    }
 }

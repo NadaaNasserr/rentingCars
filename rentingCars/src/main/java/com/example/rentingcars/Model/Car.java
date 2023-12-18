@@ -39,6 +39,7 @@ public class Car {
 
 
 
+
     @ManyToOne
     @JoinColumn(name = "supplier_id" , referencedColumnName = "id")
     @JsonIgnore

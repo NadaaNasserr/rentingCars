@@ -42,4 +42,10 @@ public class UserController {
 
     }
 
+    @GetMapping("/login/{username}/{password}")
+    private ResponseEntity logIn(@PathVariable String username, @PathVariable String password){
+        String logIn = userService.logIn(username,password);
+        return ResponseEntity.status(200).body(logIn);
+    }
+
 }

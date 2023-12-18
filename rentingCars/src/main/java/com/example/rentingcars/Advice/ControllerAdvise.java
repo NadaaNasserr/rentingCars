@@ -13,7 +13,6 @@ import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -107,6 +106,13 @@ public class ControllerAdvise {
 
     @ExceptionHandler(value = JpaSystemException.class)
     public ResponseEntity IncorrectResultSizeDataAccessException(JpaSystemException e){
+        String msg = e.getMessage();
+        return ResponseEntity.status(400).body(msg);
+
+    }
+
+    @ExceptionHandler(value = NullPointerException.class)
+    public ResponseEntity NullPointerException(NullPointerException e){
         String msg = e.getMessage();
         return ResponseEntity.status(400).body(msg);
 

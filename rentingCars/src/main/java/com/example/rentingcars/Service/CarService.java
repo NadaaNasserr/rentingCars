@@ -19,18 +19,21 @@ public class CarService {
     private final EmployeeRepository employeeRepository;
 
 
-    public List<Car> getAllCar(){
+    public List<Car> getAllCar() {
+
         return carRepository.findAll();
     }
-    public void addCar(Car car){
+
+    public void addCar(Car car) {
 
         carRepository.save(car);
-        Boolean rew =false;
+        Boolean rew = false;
         car.setIsChecked(rew);
         carRepository.save(car);
     }
-    public void updateCar(Integer id,Car car){
-        Car oldCar =carRepository.findCarById(id);
+
+    public void updateCar(Integer id, Car car) {
+        Car oldCar = carRepository.findCarById(id);
         if (oldCar == null) {
             throw new ApiException("the id of car not found ");
         }
@@ -48,8 +51,8 @@ public class CarService {
         carRepository.save(oldCar);
     }
 
-    public void deleteCar(Integer id){
-        Car car =carRepository.findCarById(id);
+    public void deleteCar(Integer id) {
+        Car car = carRepository.findCarById(id);
         if (car == null) {
             throw new ApiException("the id of car not found ");
 
@@ -58,50 +61,81 @@ public class CarService {
     }
 
 
-    public List<Car> getAllCarsByBrand(String brand){
+    public List<Car> getAllCarsByBrand(String brand) {
 
         List<Car> cars = carRepository.findAllByBrand(brand);
-        if(cars.isEmpty()){
+        if (cars.isEmpty()) {
             throw new ApiException("this brand is not available");
         }
         return cars;
 
     }
-    public List<Car> getAllCarsByColor(String color){
+
+    public List<Car> getAllCarsByColor(String color) {
         List<Car> cars = carRepository.findAllByColor(color);
-        if(cars.isEmpty()){
+        if (cars.isEmpty()) {
             throw new ApiException("this color is not available");
         }
         return cars;
 
     }
 
-    public List<Car> getAllCarsByLocation(String location){
+    public List<Car> getAllCarsByLocation(String location) {
         List<Car> cars = carRepository.findAllByLocation(location);
-        if(cars.isEmpty()){
+        if (cars.isEmpty()) {
             throw new ApiException("no cars in specified location");
         }
         return cars;
     }
 
-    public String currentStatus(Integer id){
+    public String currentStatus(Integer id) {
         Car car = carRepository.findCarById(id);
-        if(car==null){
+        if (car == null) {
             throw new ApiException("car id not found");
 
         }
         return car.getCurrentStatus();
     }
 
-    public List<Car> getAllCarsAvailable(){
+    public List<Car> getAllCarsAvailable() {
         List<Car> cars = carRepository.getAllCarsAvailable();
-        if(cars.isEmpty()){
+        if (cars.isEmpty()) {
             throw new ApiException("no cars available now");
-
         }
+
         return cars;
     }
-}
+
+    public List<Car> getAllCarsIsChecked() {
+        List<Car> cars = carRepository.getAllCarsIsChecked();
+        if (cars.isEmpty()) {
+            throw new ApiException("no cars checked now");
+        }
+
+        return cars;
+    }
+
+    public void carCheck(Integer car_id, Integer employee_id) {
+        Car car = carRepository.findCarById(car_id);
+        Employee employee = employeeRepository.findEmployeeById(employee_id);
+
+        if (car == null || employee == null) {
+            throw new ApiException("car id or employee id incorrect");
+        }
+
+            if (employee.getQualification().equals("engineer")) {
+                car.setIsChecked(true);
+                employee.setCountOfCarsInspected(employee.getCountOfCarsInspected() + 1);
+                carRepository.save(car);
+                employeeRepository.save(employee);
+            } else
+                throw new ApiException("employee does not conform to conditions");
+
+        }
+
+    }
+
+
 
 
 

@@ -24,4 +24,12 @@ public interface CarRepository extends JpaRepository<Car,Integer> {
     List<Car> getAllCarsAvailable();
 
 
+
+
+    @Query("select s from Car s where s.isChecked=true")
+    List<Car> getAllCarsIsChecked();
+
+
+
+
 }
