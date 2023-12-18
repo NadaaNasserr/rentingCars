@@ -7,8 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.List;
+import java.util.Set;
+import java.util.Date;
 
 @Setter
 @Getter
@@ -30,9 +33,14 @@ public class Car {
     private double hourly_price;
     private double monthly_price;
     private double weekly_price;
+    @Pattern(regexp = "^(day|week|Month)$")
+    private String dur;
+    private Integer authorized;
     @Pattern(regexp = "^(Available|Rented)$")
     private String currentStatus;  // or >>>>>  private Boolean isAvailable;
     private Boolean isChecked;
+    @DateTimeFormat( pattern= "yyyy-MM-dd")
+    private Date day;
 
 
 
@@ -55,5 +63,11 @@ public class Car {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @JsonIgnore
     private User user;
+
+
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "car")
+    private Set<Rental> rentals;
+
 
 }

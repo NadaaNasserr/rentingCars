@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import java.time.LocalDate;
 import java.util.Set;
 
 @Setter
@@ -24,10 +24,12 @@ public class Employee {
     private Boolean isApproved;
     private String qualification;
     private double bonus;
+    private Integer totalCar;
+    private LocalDate day=LocalDate.now();
 
 
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "id")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "employee")
     private Set<Car> cars;
 
 }

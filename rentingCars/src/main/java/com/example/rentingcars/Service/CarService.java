@@ -4,11 +4,14 @@ package com.example.rentingcars.Service;
 import com.example.rentingcars.API.ApiException;
 import com.example.rentingcars.Model.Car;
 import com.example.rentingcars.Model.Employee;
+import com.example.rentingcars.Model.Rental;
+import com.example.rentingcars.Model.User;
 import com.example.rentingcars.Repository.CarRepository;
 import com.example.rentingcars.Repository.EmployeeRepository;
+import com.example.rentingcars.Repository.RentalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,6 +20,7 @@ public class CarService {
 
     private final CarRepository carRepository;
     private final EmployeeRepository employeeRepository;
+    private final RentalRepository rentalRepository;
 
 
     public List<Car> getAllCar() {
@@ -114,7 +118,16 @@ public class CarService {
 
         return cars;
     }
+    public void assignCarToRental(Integer car_id, Integer rental_id ){
+        Car car=carRepository.findCarById(car_id);
+        Rental rental=rentalRepository.findRentalById(rental_id);
 
+        if(car_id ==null || rental_id == null){
+            throw  new ApiException("car or rental not found");
+        }
+        rental.setCar(car);
+        rentalRepository.save(rental);
+    }
     public void carCheck(Integer car_id, Integer employee_id) {
         Car car = carRepository.findCarById(car_id);
         Employee employee = employeeRepository.findEmployeeById(employee_id);
@@ -132,6 +145,14 @@ public class CarService {
                 throw new ApiException("employee does not conform to conditions");
 
         }
+    public List<Car> listCar(Date date,Date dat){
+        List<Car> cars =carRepository.findCarByDay(date, dat);
+        if (cars == null) {
+            throw new ApiException("the month not add car ");
+        }
+        return cars;
+    }
+
 
     }
 

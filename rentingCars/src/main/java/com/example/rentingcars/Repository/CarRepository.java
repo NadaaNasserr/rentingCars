@@ -4,7 +4,7 @@ import com.example.rentingcars.Model.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
+import java.util.Date;
 import java.util.List;
 
 
@@ -25,7 +25,8 @@ public interface CarRepository extends JpaRepository<Car,Integer> {
 
 
 
-
+    @Query("select e from Car e where e.day between  ?1 and  ?2")
+    List<Car> findCarByDay(Date date, Date dat);
     @Query("select s from Car s where s.isChecked=true")
     List<Car> getAllCarsIsChecked();
 

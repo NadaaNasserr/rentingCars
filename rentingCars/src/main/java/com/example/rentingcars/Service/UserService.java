@@ -3,9 +3,11 @@ package com.example.rentingcars.Service;
 
 import com.example.rentingcars.API.ApiException;
 import com.example.rentingcars.Model.Car;
+import com.example.rentingcars.Model.Rental;
 import com.example.rentingcars.Model.Supplier;
 import com.example.rentingcars.Model.User;
 import com.example.rentingcars.Repository.CarRepository;
+import com.example.rentingcars.Repository.RentalRepository;
 import com.example.rentingcars.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final CarRepository carRepository;
+    private final RentalRepository rentalRepository;
 
 
     public List<User> getAllUser(){
@@ -58,14 +61,22 @@ public class UserService {
         car.setUser(user);
         carRepository.save(car);
     }
+    public void assignUserToRental(Integer user_id, Integer rental_id ){
+        User user=userRepository.findUserById(user_id);
+        Rental rental=rentalRepository.findRentalById(rental_id);
+
+        if(user_id ==null || rental_id == null){
+            throw  new ApiException("user or rental not found");
+        }
+        rental.setUser(user);
+      rentalRepository.save(rental);
+       }
 
     public String logIn(String username, String password){
-
         User user = userRepository.logIn(username,password);
         if(user==null){
             throw  new ApiException("username or password is incorrect");
         }
         return "Login successfully";
-
     }
 }

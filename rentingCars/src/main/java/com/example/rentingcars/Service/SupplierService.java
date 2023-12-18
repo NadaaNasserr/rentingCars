@@ -3,8 +3,10 @@ package com.example.rentingcars.Service;
 
 import com.example.rentingcars.API.ApiException;
 import com.example.rentingcars.Model.Car;
+import com.example.rentingcars.Model.Rental;
 import com.example.rentingcars.Model.Supplier;
 import com.example.rentingcars.Repository.CarRepository;
+import com.example.rentingcars.Repository.RentalRepository;
 import com.example.rentingcars.Repository.SupplierRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ public class SupplierService {
 
     private final SupplierRepository supplierRepository;
     private final CarRepository carRepository;
+    private final RentalRepository rentalRepository;
 
     public List<Supplier> getAllSupplier(){
         return supplierRepository.findAll();
@@ -51,9 +54,21 @@ public class SupplierService {
             throw  new ApiException("supplier or car not found");
         }
         car.setSupplier(supplier);
-        carRepository.save(car);
+         carRepository.save(car);
+
     }
 
+    public void assignSupplierToRental(Integer supplier_id, Integer rental_id ){
+        Supplier supplier = supplierRepository.findSupplierById(supplier_id);
+        Rental rental=rentalRepository.findRentalById(rental_id);
+
+        if(supplier_id==null || rental_id == null){
+            throw  new ApiException("supplier or rental not found");
+        }
+        rental.setSupplier(supplier);
+        rentalRepository.save(rental);
+
+    }
 
 
 

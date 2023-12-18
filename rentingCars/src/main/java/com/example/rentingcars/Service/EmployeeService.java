@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.CacheRequest;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -67,5 +68,27 @@ public class EmployeeService {
         car.setEmployee(employee);
         carRepository.save(car);
     }
+    public Set<Car> getAllCar(Integer  id){
+        Employee employee =employeeRepository.findEmployeeById(id);
+        if (employee == null) {
+            throw new ApiException("the id not found ");
+        }
+        carRepository.findAll();
+        return employee.getCars();
+    }
+    public void subCar(Integer id){
+        Employee employee =employeeRepository.findEmployeeById(id);
+        if (employee == null) {
+            throw new ApiException("the id not found ");
+        }
+        if (employee.getCountOfCarsInspected()>29){
+            employee.setTotalCar(employee.getTotalCar()+employee.getCountOfCarsInspected());
+            employee.setBonus(employee.getBonus()+50);
+            employee.setCountOfCarsInspected(0);
+            employeeRepository.save(employee);
+        }
+    }
 
 }
+
+

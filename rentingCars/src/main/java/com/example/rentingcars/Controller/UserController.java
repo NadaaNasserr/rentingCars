@@ -42,6 +42,12 @@ public class UserController {
 
     }
 
+    @PutMapping("/{user_id}/assignUserToRental/{rental_id}")
+    public ResponseEntity assignUserToRental(@PathVariable Integer user_id, @PathVariable Integer rental_id){
+        userService.assignUserToRental(user_id,rental_id);
+        return ResponseEntity.status(200).body("DONE");
+
+    }
     @GetMapping("/login/{username}/{password}")
     private ResponseEntity logIn(@PathVariable String username, @PathVariable String password){
         String logIn = userService.logIn(username,password);

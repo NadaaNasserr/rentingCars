@@ -1,6 +1,7 @@
 package com.example.rentingcars.Controller;
 
 import com.example.rentingcars.Model.Car;
+import com.example.rentingcars.Model.Date;
 import com.example.rentingcars.Service.CarService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,14 @@ public class CarController {
     public ResponseEntity deleteCar(@PathVariable Integer id) {
         carService.deleteCar(id);
         return ResponseEntity.status(HttpStatus.OK).body("delete car");
+
+    }
+
+
+    @PutMapping("/{car_id}/assignCarToRental/{rental_id}")
+    public ResponseEntity assignCarToRental(@PathVariable Integer car_id, @PathVariable Integer rental_id){
+        carService.assignCarToRental(car_id,rental_id);
+        return ResponseEntity.status(200).body("DONE");
 
     }
 
@@ -88,5 +97,11 @@ public class CarController {
     public ResponseEntity carCheck(@PathVariable  Integer car_id, @PathVariable  Integer employee_id){
         carService.carCheck(car_id,employee_id);
         return ResponseEntity.status(HttpStatus.OK).body("the car has been successfully inspected");
+    }
+
+    @GetMapping("/get/{date}/{dat}")
+    public ResponseEntity returnCar(@PathVariable java.util.Date date, @PathVariable java.util.Date dat){
+        return ResponseEntity.status(HttpStatus.OK).body(carService.listCar(date, dat));
+
     }
 }

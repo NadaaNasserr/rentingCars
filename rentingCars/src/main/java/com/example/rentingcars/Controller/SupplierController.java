@@ -42,4 +42,11 @@ public class SupplierController {
         return ResponseEntity.status(200).body("DONE");
 
     }
+
+    @PutMapping("/{supplier_id}/assignSupplierToRental/{rental_id}")
+    public ResponseEntity assignSupplierToRental(@PathVariable Integer supplier_id, @PathVariable Integer rental_id){
+        supplierService.assignSupplierToRental(supplier_id,rental_id);
+        return ResponseEntity.status(200).body("DONE");
+
+    }
 }

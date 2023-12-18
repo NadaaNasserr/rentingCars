@@ -33,4 +33,10 @@ public class RentalController {
         return ResponseEntity.status(HttpStatus.OK).body("delete Rental");
 
     }
+    @PutMapping("/put/{supplier_id}/{user_id}/{car_id}/{num}")
+    public ResponseEntity rent(@PathVariable Integer supplier_id,@PathVariable Integer user_id,@PathVariable Integer car_id,@PathVariable Integer num){
+        rentalService.rental(supplier_id,user_id,car_id,num);
+        return ResponseEntity.status(HttpStatus.OK).body("rental");
+
+    }
 }

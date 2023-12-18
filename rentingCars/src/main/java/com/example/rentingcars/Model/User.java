@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Setter
@@ -30,11 +31,15 @@ public class User {
     private String username;
     private String password;
     private String license;
+    private double brice;
+    private LocalDate day=LocalDate.now();
+
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+    private Set<Rental> rentals;
 
 
 
-
-
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "id")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
     private Set<Car> cars;
 }

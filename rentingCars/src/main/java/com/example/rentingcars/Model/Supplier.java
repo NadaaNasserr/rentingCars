@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Setter
@@ -23,11 +24,15 @@ public class Supplier {
     private String name;
     private String phone_number;
     private Integer numberOfCrs;
+    private LocalDate day=LocalDate.now();
+    private double brice;
 
 
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "supplier")
+    private Set<Rental> rentals;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "id")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "supplier")
     private Set<Car> cars;
 
 }

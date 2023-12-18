@@ -45,5 +45,17 @@ public class EmployeeController {
         return ResponseEntity.status(200).body("DONE");
 
     }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity getAllCarUser(@PathVariable Integer id){
+        return ResponseEntity.status(HttpStatus.OK).body(employeeService.getAllCar(id));
+
+    }
+    @PutMapping("/putt/{id}")
+    public ResponseEntity subCar(@PathVariable Integer id){
+        employeeService.subCar(id);
+        return ResponseEntity.status(HttpStatus.OK).body("don");
+
+    }
 }
 
