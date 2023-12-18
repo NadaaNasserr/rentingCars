@@ -1,14 +1,14 @@
 package com.example.rentingcars.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Setter
 @Getter
@@ -16,6 +16,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 public class User {
+
 
 
     @Id
@@ -29,4 +30,11 @@ public class User {
     private String username;
     private String password;
     private String license;
+
+
+
+
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "id")
+    private Set<Car> cars;
 }

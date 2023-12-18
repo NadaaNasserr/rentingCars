@@ -1,14 +1,14 @@
 package com.example.rentingcars.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -18,6 +18,7 @@ import lombok.Setter;
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id;
     private String type;
     private String brand;
@@ -32,4 +33,26 @@ public class Car {
     @Pattern(regexp = "^(Available|Rented)$")
     private String currentStatus;  // or >>>>>  private Boolean isAvailable;
     private Boolean isChecked;
+
+
+
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "supplier_id" , referencedColumnName = "id")
+    @JsonIgnore
+    private Supplier supplier;
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id", referencedColumnName = "id")
+    @JsonIgnore
+    private Employee employee;
+
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnore
+    private User user;
+
 }

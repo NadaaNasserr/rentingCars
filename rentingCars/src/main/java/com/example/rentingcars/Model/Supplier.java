@@ -1,14 +1,13 @@
 package com.example.rentingcars.Model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Setter
 @Getter
@@ -24,5 +23,11 @@ public class Supplier {
     private String name;
     private String phone_number;
     private Integer numberOfCrs;
+
+
+
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "id")
+    private Set<Car> cars;
 
 }
