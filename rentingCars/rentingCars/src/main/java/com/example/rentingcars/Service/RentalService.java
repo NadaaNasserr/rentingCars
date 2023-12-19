@@ -39,10 +39,11 @@ public class RentalService {
 
         }
 
+
+
         Rental rental = new Rental(null,rentalDTO.getDuration(),rentalDTO.getDur(),rentalDTO.getTotal_price(), user, car);
-
-
         rentalRepository.save(rental);
+
     }
 
     public void updateRental(Integer id,RentalDTO rentalDTO){
